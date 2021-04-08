@@ -19,6 +19,7 @@ import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Course;
 
 @SpringBootTest
 class NativeQueryTest {
+	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
@@ -31,7 +32,7 @@ class NativeQueryTest {
 		List courseList = query.getResultList();
 		logger.info("Conditional query : -> {}" + courseList);
 	}
-	
+
 	@Test
 	void nativeQueryWithNamedParameterTest() {
 		Query query = em.createNativeQuery("select * from course where id = :id", Course.class);
@@ -40,14 +41,14 @@ class NativeQueryTest {
 		assertNotNull(courseList);
 		logger.info("Conditional named query : -> {}" + courseList);
 	}
-	
+
 	@Test
 	@Transactional
 	void nativeQueryForUpdateTest() {
 		Query query = em.createNativeQuery("update course set last_updated_date = sysdate()");
-		int noOfUpdatedRow =  query.executeUpdate();
+		int noOfUpdatedRow = query.executeUpdate();
 		assertNotEquals(0, noOfUpdatedRow);
-		logger.info("noOfUpdatedRow -> {}",noOfUpdatedRow);
+		logger.info("noOfUpdatedRow -> {}", noOfUpdatedRow);
 	}
-	
+
 }

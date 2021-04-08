@@ -34,7 +34,6 @@ public class CourseRepository {
 			em.persist(course);
 			result = course;
 		} else {
-			// Merge method to update data
 			result = em.merge(course);
 		}
 		return result;
