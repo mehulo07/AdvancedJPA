@@ -31,12 +31,12 @@ public class ReviewRepository {
 
 	public Review save(Review review) {
 		Review reviewResponse = null;
-		if (review.getId() == null) {
-			em.persist(review);
-			reviewResponse = review;
-		} else {
-			reviewResponse = em.merge(review);
-		}
+			if (review.getId() == null) {
+				em.persist(review);
+				reviewResponse = review;
+			} else {
+				reviewResponse = em.merge(review);
+			}	
 		return reviewResponse;
 	}
 

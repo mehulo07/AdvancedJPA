@@ -1,6 +1,6 @@
 package com.mehuldemo.jpa.hibernate.AdvancedJPA;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.text.NumberFormat.Style;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Passport;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Student;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.StudentRepository;
 
@@ -38,7 +37,21 @@ class StudentRepositoryTest {
 	@Test
 	//@Transactional //Persistence Context
 	void testTransactional() {
-		studentRepository.someDummyMethodForTest();
+		//studentRepository.someDummyMethodForTest();
 	}
 
+	
+	@Test
+	@Transactional
+	public void getStudentAndCourses() {
+		Student student = em.find(Student.class, 13L);
+		logger.info("Student is : {}",student);
+		logger.info("Student's Courses is : {} ",student.getCourses());
+	}
+	
+	@Test
+	public void insertTestOfStudentAndCourse() {
+		studentRepository.insertStudentAndCourse();
+		logger.info("Operation Done");
+	}
 }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Review {
@@ -17,6 +18,9 @@ public class Review {
 
 	private String description;
 
+	@ManyToOne
+	private Course course;
+	
 	public Review() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -47,9 +51,17 @@ public class Review {
 		this.description = description;
 	}
 
-	@Override
-	public String toString() {
-		return "Review [rating=" + rating + ", description=" + description + "]";
+	public Course getCourse() {
+		return course;
 	}
 
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", rating=" + rating + ", description=" + description + "]";
+	}
+	
 }

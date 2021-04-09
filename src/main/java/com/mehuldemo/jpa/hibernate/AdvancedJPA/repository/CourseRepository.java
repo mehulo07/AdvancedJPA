@@ -1,5 +1,7 @@
 package com.mehuldemo.jpa.hibernate.AdvancedJPA.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Course;
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Review;
 
 @Repository
 @Transactional
@@ -55,4 +58,16 @@ public class CourseRepository {
 		em.refresh(course1);
 		em.flush();
 	}
+
+	public void addReviewForCourse(Long courseId, List<Review> reviews) {
+		Course course = findById(courseId);
+		logger.info("Existing Reviews -> {}", course.getReviews());
+
+		reviews.forEach((review) -> {
+			course.addReview(review);
+			review.setCourse(course);
+			em.persist(review);
+		});
+	}
+
 }
