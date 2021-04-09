@@ -113,7 +113,7 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 
 		courseRepository.addReviewForCourse(4L, reviews);
 		studentRepository.insertStudentAndCourse();
-
+		//
 		employeeRepository.insert(new PartTimeEmployee("Parth Parmar", new BigDecimal("15")));
 		employeeRepository.insert(new FullTimeEmployee("Rishabh ", new BigDecimal("15000")));
 
