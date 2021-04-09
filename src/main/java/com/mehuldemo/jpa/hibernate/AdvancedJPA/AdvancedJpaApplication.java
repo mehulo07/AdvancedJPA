@@ -1,5 +1,6 @@
 package com.mehuldemo.jpa.hibernate.AdvancedJPA;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Course;
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.FullTimeEmployee;
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.PartTimeEmployee;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Passport;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Review;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Student;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.CourseRepository;
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.EmployeeRepository;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.ReviewRepository;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.StudentRepository;
 
@@ -25,6 +29,9 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 
 	@Autowired
 	private CourseRepository courseRepository;
+
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	/*
 	 * @Autowired private PassportRepository passportRepository;
@@ -106,6 +113,13 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 
 		courseRepository.addReviewForCourse(4L, reviews);
 		studentRepository.insertStudentAndCourse();
+
+		employeeRepository.insert(new PartTimeEmployee("Parth Parmar", new BigDecimal("15")));
+		employeeRepository.insert(new FullTimeEmployee("Rishabh ", new BigDecimal("15000")));
+
+		// logger.info("All Employee -> {}", employeeRepository.getAllEmployee());
+		logger.info("All Part time Employee -> {}", employeeRepository.getAllPartTimeEmployee());
+		logger.info("All Full time Employee -> {}", employeeRepository.getAllFullTimeEmployee());
 	}
 
 }
