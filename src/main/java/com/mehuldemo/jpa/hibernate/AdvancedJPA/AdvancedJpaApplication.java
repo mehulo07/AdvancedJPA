@@ -58,7 +58,7 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 
 		Course course1 = courseRepository.save(new Course("JPA in 50 steps"));
 		Course course2 = courseRepository.save(new Course("Networking"));
-		Course course3 = courseRepository.save(new Course("AngularJs"));
+		Course course3 = courseRepository.save(new Course("AngularJS"));
 		Course course4 = courseRepository.save(new Course("ReactJS"));
 		Course course5 = courseRepository.save(new Course("AWS"));
 		Course course6 = courseRepository.save(new Course("Java 11"));
