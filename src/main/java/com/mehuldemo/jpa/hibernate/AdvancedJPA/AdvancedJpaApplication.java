@@ -17,6 +17,7 @@ import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.PartTimeEmployee;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Passport;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Review;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Student;
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.enums.ReviewRating;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.CourseRepository;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.EmployeeRepository;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.ReviewRepository;
@@ -50,13 +51,13 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Review review1 = new Review("4.5", "Amazing");
-		Review review2 = new Review("1", "Bad");
-		Review review3 = new Review("4", "Wonderful");
-		Review review4 = new Review("5", "Super Dooper");
-		Review review5 = new Review("3", "Good");
+		Review review1 = new Review(ReviewRating.FOUR, "Amazing");
+		Review review2 = new Review(ReviewRating.ONE, "Bad");
+		Review review3 = new Review(ReviewRating.FOUR, "Wonderful");
+		Review review4 = new Review(ReviewRating.FIVE, "Super Dooper");
+		Review review5 = new Review(ReviewRating.THREE, "Good");
 
-		Course course1 = courseRepository.save(new Course("JPA in 50 steps"));
+		Course course1 = courseRepository.save(new Course("JPA in 50 steps",false));
 		Course course2 = courseRepository.save(new Course("Networking"));
 		Course course3 = courseRepository.save(new Course("AngularJS"));
 		Course course4 = courseRepository.save(new Course("ReactJS"));
@@ -108,8 +109,8 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 		courseRepository.playWithEntityManager();
 
 		List<Review> reviews = new ArrayList<Review>();
-		reviews.add(new Review("4", "Super Dooper"));
-		reviews.add(new Review("5", "So Easy to learn , Well Explained."));
+		reviews.add(new Review(ReviewRating.FIVE, "Super Dooper"));
+		reviews.add(new Review(ReviewRating.FIVE, "So Easy to learn , Well Explained."));
 
 		courseRepository.addReviewForCourse(4L, reviews);
 		studentRepository.insertStudentAndCourse();
@@ -120,6 +121,12 @@ public class AdvancedJpaApplication implements CommandLineRunner {
 		// logger.info("All Employee -> {}", employeeRepository.getAllEmployee());
 		logger.info("All Part time Employee -> {}", employeeRepository.getAllPartTimeEmployee());
 		logger.info("All Full time Employee -> {}", employeeRepository.getAllFullTimeEmployee());
+		
+		
+		courseRepository.deleteById(4L);
+		logger.info("All Full time Employee -> {}", courseRepository);
+		
+		studentRepository.insertStudentWithAddress();
 	}
 
 }

@@ -2,9 +2,13 @@ package com.mehuldemo.jpa.hibernate.AdvancedJPA.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.enums.ReviewRating;
 
 @Entity
 public class Review {
@@ -13,8 +17,8 @@ public class Review {
 	@GeneratedValue
 	private Long id;
 
-	@Column(nullable = false)
-	private String rating;
+	@Enumerated(EnumType.STRING)
+	private ReviewRating rating;
 
 	private String description;
 
@@ -26,7 +30,7 @@ public class Review {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Review(String rating, String description) {
+	public Review(ReviewRating rating, String description) {
 		this.rating = rating;
 		this.description = description;
 	}
@@ -35,11 +39,11 @@ public class Review {
 		return id;
 	}
 
-	public String getRating() {
+	public ReviewRating getRating() {
 		return rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(ReviewRating rating) {
 		this.rating = rating;
 	}
 

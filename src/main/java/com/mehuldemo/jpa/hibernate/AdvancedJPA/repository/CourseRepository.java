@@ -43,7 +43,7 @@ public class CourseRepository {
 	}
 
 	public void playWithEntityManager() {
-		Course course1 = new Course("Webservices");
+		Course course1 = new Course("Webservices",false);
 		// Persist method to save data
 		em.persist(course1);
 		Course course2 = new Course("OOPS");
@@ -69,5 +69,5 @@ public class CourseRepository {
 			em.persist(review);
 		});
 	}
-
+	
 }

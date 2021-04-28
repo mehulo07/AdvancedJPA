@@ -44,18 +44,18 @@ class CourseRepositoryTest {
 	}
 
 	@Test // This annotation use for reset data-set as it was.
-
 	@DirtiesContext
 	void deleteByIdTest() {
 		courseRepository.deleteById(4L);
 		Course course = courseRepository.findById(4L);
+		logger.info("course is {} :" + course);
 		assertNull(course);
 	}
 
 	@Test
 	@DirtiesContext
 	void saveUpdateTest() {
-		Course newCorurse = courseRepository.save(new Course("MBA"));
+		Course newCorurse = courseRepository.save(new Course("MBA",false));
 		assertNotNull(newCorurse);
 		logger.info("existing Course : {}", newCorurse);
 		assertEquals("MBA", newCorurse.getName());
@@ -87,4 +87,18 @@ class CourseRepositoryTest {
 		logger.info("Course -> {}", review.getCourse());
 	}
 
+	
+	@Test
+	@Transactional //To achive first level catch we have to put DB call in single transaction()
+	void findByIdTest_FirstLevelCatch() {
+		logger.info("Test is running......");
+		Course course = courseRepository.findById(4L);
+		logger.info("course is {} :" + course);
+		assertEquals("ReactJS", course.getName());
+		
+		Course course1 = courseRepository.findById(4L);
+		logger.info("course is {} :" + course1);
+		assertEquals("ReactJS", course1.getName());
+	}
+	
 }

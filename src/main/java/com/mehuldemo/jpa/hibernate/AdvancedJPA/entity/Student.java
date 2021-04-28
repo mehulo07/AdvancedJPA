@@ -25,6 +25,9 @@ public class Student {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private Passport passport;
+	
+	//Without specifying relationship we can add extra column in same table and can reuse that fields 
+	private Address address;
 
 	@ManyToMany
 	@JoinTable(name = "STUDENT_COURSE", 
@@ -79,6 +82,14 @@ public class Student {
 
 	public void removeCourse(Course course) {
 		this.courses.remove(course);
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override

@@ -12,16 +12,21 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "course")
 @NamedQueries(value = { @NamedQuery(name = "getAllCourse", query = "select C from Course C"),
 		@NamedQuery(name = "getAllJsCourse", query = "select C from Course C where UPPER(name) like UPPER('%JS%')"), })
 
+@SQLDelete(sql="update course set is_deleted=true where id = ?")
+@Where(clause = "is_deleted = false")
 public class Course {
 
 	@Id
@@ -43,6 +48,8 @@ public class Course {
 	@ManyToMany(mappedBy = "courses")
 	private List<Student> students = new ArrayList<Student>();
 
+	private boolean isDeleted;
+
 	protected Course() {
 		// TODO Auto-generated constructor stub
 	}
@@ -50,6 +57,13 @@ public class Course {
 	public Course(String name) {
 		super();
 		this.name = name;
+		this.isDeleted = false;
+	}
+
+	public Course(String name, boolean isDeleted) {
+		super();
+		this.name = name;
+		this.isDeleted = isDeleted;
 	}
 
 	public Long getId() {
@@ -92,6 +106,21 @@ public class Course {
 		this.students.remove(student);
 	}
 
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+	
+	//JustExecuted for remove method for same transaction
+	@PreRemove
+	private void preRemove() {
+		System.err.println("This is PreRemove executed");
+		this.isDeleted = true;	
+	}
+	
 	@Override
 	public String toString() {
 		return "Course [name=" + name + "]";

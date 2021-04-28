@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Address;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Course;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Passport;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Student;
@@ -78,12 +79,20 @@ public class StudentRepository {
 	public void insertStudentAndCourse() {
 		Student student = new Student("Mukesh Makwana");
 		student.setPassport(new Passport("ABABABA"));
-		Course course = new Course("Machine Testing");
+		Course course = new Course("Machine Testing", false);
 		saveStudentWithPassport(student);
 		em.persist(course);
 
 		student.addCourse(course);
 		course.addStudent(student);
 		em.persist(student);
+	}
+
+	public void insertStudentWithAddress() {
+		Student student = new Student("TestAddress");
+		logger.info("Student without : {}", student);
+		student.setAddress(new Address("B/292", "Santramnagar", "nadiad"));
+		save(student);
+		logger.info("Student with Address : {}", student);
 	}
 }

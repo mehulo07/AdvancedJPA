@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Address;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.entity.Student;
 import com.mehuldemo.jpa.hibernate.AdvancedJPA.repository.StudentRepository;
 
@@ -35,23 +36,30 @@ class StudentRepositoryTest {
 	 */
 
 	@Test
-	//@Transactional //Persistence Context
+	// @Transactional //Persistence Context
 	void testTransactional() {
-		//studentRepository.someDummyMethodForTest();
+		// studentRepository.someDummyMethodForTest();
 	}
 
-	
 	@Test
 	@Transactional
 	public void getStudentAndCourses() {
 		Student student = em.find(Student.class, 13L);
-		logger.info("Student is : {}",student);
-		logger.info("Student's Courses is : {} ",student.getCourses());
+		logger.info("Student is : {}", student);
+		logger.info("Student's Courses is : {} ", student.getCourses());
 	}
-	
+
 	@Test
 	public void insertTestOfStudentAndCourse() {
 		studentRepository.insertStudentAndCourse();
 		logger.info("Operation Done");
+	}
+
+	@Test
+	public void insertStudentWithAddress() {
+		Student student = em.find(Student.class, 13L);
+		student.setAddress(new Address("B/292", "Santramnagar", "nadiad"));
+		em.flush();
+		logger.info("Student with Address : {}", student);
 	}
 }
